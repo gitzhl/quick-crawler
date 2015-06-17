@@ -9,7 +9,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 /**
- * 赶集网爬虫
  *
  * @author heliang.zhu
  *
