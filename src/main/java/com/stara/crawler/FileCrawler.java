@@ -17,11 +17,13 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.stara.crawler.util.PropertiesUtils;
+
 public class FileCrawler extends BaseCrawler implements FileContentOperations {
 
 	@Override
 	public void start() {
-		String content = getContent("f:/data.txt");
+		String content = getContent(PropertiesUtils.getProperty("file.source"));
 		Document document = Jsoup.parse(content);
 		Elements lis = document.select("img");
 		Iterator<Element> iterator = lis.iterator();
@@ -72,7 +74,7 @@ public class FileCrawler extends BaseCrawler implements FileContentOperations {
 			is = con.getInputStream();
 			byte[] bs = new byte[1024];
 			int len;
-			File sf = new File("f:/images");
+			File sf = new File(PropertiesUtils.getProperty("file.storage"));
 			if (!sf.exists()) {
 				sf.mkdirs();
 			}

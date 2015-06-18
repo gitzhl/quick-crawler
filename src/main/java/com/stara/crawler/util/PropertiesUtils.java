@@ -33,7 +33,7 @@ public class PropertiesUtils {
 
 	private static void init() {
 		if (PROPERTIES == null) {
-			PROPERTIES = new String[] { "httpProxool.properties" };
+			PROPERTIES = new String[] { "httpProxool.properties","fileOperations.properties" };
 		}
 		properties = new Properties();
 		try {
