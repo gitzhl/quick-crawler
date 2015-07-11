@@ -13,6 +13,8 @@ import java.net.URLConnection;
 import java.util.Date;
 import java.util.Iterator;
 
+import javax.swing.JTextArea;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -22,10 +24,29 @@ import com.stara.crawler.util.DateFormatter;
 import com.stara.crawler.util.PropertiesUtils;
 
 public class FileCrawler extends BaseCrawler implements FileContentOperations {
-
+	
+	private JTextArea jar;
+	public FileCrawler(JTextArea jar){
+		this.jar = jar;
+	}
+	public FileCrawler(){
+	}
+	private String fileSource = null;
+	private String fileStorage = null;
+	public void setFileSource(String fileSource) {
+		this.fileSource = fileSource;
+	}
+	public void setFileStorage(String fileStorage) {
+		this.fileStorage = fileStorage;
+	}
 	@Override
 	public void start() {
-		String content = getContent(PropertiesUtils.getProperty("file.source"));
+		String content = null;
+		if(fileSource == null){
+			content = getContent(PropertiesUtils.getProperty("file.source"));
+		}else{
+			content = getContent(fileSource);
+		}
 		Document document = Jsoup.parse(content);
 		Elements lis = document.select("img");
 		Iterator<Element> iterator = lis.iterator();
@@ -80,12 +101,14 @@ public class FileCrawler extends BaseCrawler implements FileContentOperations {
 			is = con.getInputStream();
 			byte[] bs = new byte[1024];
 			int len;
-			File sf = new File(PropertiesUtils.getProperty("file.storage")+File.separator+dir);
+			String storage = fileStorage == null?PropertiesUtils.getProperty("file.storage"):fileStorage;
+			File sf = new File(storage+File.separator+dir);
 			if (!sf.exists()) {
 				sf.mkdirs();
 			}
 			String rp = sf.getPath() + "\\"+System.currentTimeMillis()+"."+imageUrl.substring(imageUrl.lastIndexOf(".")+1);
-			System.out.println("第"+index+"个文件>>>>>【"+imageUrl+"】保存地址>>>>>>"+rp);
+			jar.append("第"+(++index)+"个文件>>>>>【"+imageUrl+"】保存地址>>>>>>"+rp+"\n");
+			System.out.println("第"+(++index)+"个文件>>>>>【"+imageUrl+"】保存地址>>>>>>"+rp);
 			os = new FileOutputStream(rp);
 			while ((len = is.read(bs)) != -1) {
 				os.write(bs, 0, len);
