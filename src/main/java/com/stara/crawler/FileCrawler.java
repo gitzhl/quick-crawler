@@ -10,6 +10,7 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Date;
 import java.util.Iterator;
 
 import org.jsoup.Jsoup;
@@ -17,6 +18,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.stara.crawler.util.DateFormatter;
 import com.stara.crawler.util.PropertiesUtils;
 
 public class FileCrawler extends BaseCrawler implements FileContentOperations {
@@ -27,14 +29,18 @@ public class FileCrawler extends BaseCrawler implements FileContentOperations {
 		Document document = Jsoup.parse(content);
 		Elements lis = document.select("img");
 		Iterator<Element> iterator = lis.iterator();
+		String dir = DateFormatter.format(new Date(), "yyyyMMddhhmmss");
+		int count = 0;
 		while (iterator.hasNext()) {
 			Element element = iterator.next();
 			String href = element.attr("src");
 			if(!href.startsWith("http")&&!href.startsWith("https")){
 				href = element.attr("data-ks-lazyload");
 			}
-			storage(href);
+			storage(href,dir,count);
+			count++;
 		}
+		System.out.println(">>>>>>>>>>>>>>>>共下载图片【"+count+"】张");
 
 	}
 
@@ -63,7 +69,7 @@ public class FileCrawler extends BaseCrawler implements FileContentOperations {
 		return sb.toString();
 	}
 
-	public void storage(String imageUrl) {
+	public void storage(String imageUrl,String dir,int index) {
 		URL url = null;
 		InputStream is = null;
 		OutputStream os = null;
@@ -74,11 +80,13 @@ public class FileCrawler extends BaseCrawler implements FileContentOperations {
 			is = con.getInputStream();
 			byte[] bs = new byte[1024];
 			int len;
-			File sf = new File(PropertiesUtils.getProperty("file.storage"));
+			File sf = new File(PropertiesUtils.getProperty("file.storage")+File.separator+dir);
 			if (!sf.exists()) {
 				sf.mkdirs();
 			}
-			os = new FileOutputStream(sf.getPath() + "\\"+System.currentTimeMillis()+"."+imageUrl.substring(imageUrl.lastIndexOf(".")+1));
+			String rp = sf.getPath() + "\\"+System.currentTimeMillis()+"."+imageUrl.substring(imageUrl.lastIndexOf(".")+1);
+			System.out.println("第"+index+"个文件>>>>>【"+imageUrl+"】保存地址>>>>>>"+rp);
+			os = new FileOutputStream(rp);
 			while ((len = is.read(bs)) != -1) {
 				os.write(bs, 0, len);
 			}
