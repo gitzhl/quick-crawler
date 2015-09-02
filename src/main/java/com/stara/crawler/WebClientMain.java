@@ -21,36 +21,19 @@ public class WebClientMain {
         WEB_CLIENT.getOptions().setJavaScriptEnabled(false);
     }
     
-    public static String asText(Map<String, String> params,String url){
+    public static String asText(Map<String, String> params,String url) throws Exception{
         HtmlPage page = null;
-        try {
-            page = WEB_CLIENT.getPage(url);
-            closeWebClient(WEB_CLIENT);
-            return page.asText();
-        } catch (FailingHttpStatusCodeException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        page = WEB_CLIENT.getPage(url);
+        closeWebClient(WEB_CLIENT);
+        return page.asText();
+       
     }
     
-    public static String asXML(Map<String, String> params,String url){
+    public static String asXML(Map<String, String> params,String url) throws Exception{
         HtmlPage page = null;
-        try {
-            page = WEB_CLIENT.getPage(url);
-            closeWebClient(WEB_CLIENT);
-            return page.asXml();
-        } catch (FailingHttpStatusCodeException e) {
-            e.printStackTrace();
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
+        page = WEB_CLIENT.getPage(url);
+        closeWebClient(WEB_CLIENT);
+        return page.asXml();
     }
     
     public static void closeWebClient(WebClient webClient){
