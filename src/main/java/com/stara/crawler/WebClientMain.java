@@ -7,7 +7,11 @@ import java.util.Map;
 import com.gargoylesoftware.htmlunit.FailingHttpStatusCodeException;
 import com.gargoylesoftware.htmlunit.WebClient;
 import com.gargoylesoftware.htmlunit.html.HtmlPage;
-
+/**
+ * 
+ * @author zhl
+ * @time 2015-9-2 下午4:19:59
+ */
 public class WebClientMain {
     
     private static final WebClient WEB_CLIENT = new WebClient();
