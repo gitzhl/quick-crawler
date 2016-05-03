@@ -91,20 +91,20 @@ public class HttpProxool {
 		// 设置超时时间为20秒,设置连接超时时间为60秒
 		RequestConfig requestConfig = RequestConfig.custom().setSocketTimeout(1000 * 20).setConnectTimeout(1000 * 30)
 				.build();
-		// 伪装成谷歌浏览器
-		String userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1500.72 Safari/537.36";
+		//User-Agent
+		String userAgent = "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:45.0) Gecko/20100101 Firefox/45.0";
 		CloseableHttpClient httpClient = HttpClients.custom().setDefaultRequestConfig(requestConfig)
 				.setUserAgent(userAgent).build();
 		return httpClient;
 	}
 
+	
 	/**
-	 * 将httpClient放回到池中
-	 * 
+	 * @see 释放用完的客户端对象
 	 * @param httpClient
 	 */
 	public static void releaseHttpClientPool(HttpClient httpClient) {
-		if (httpClient == null) {
+		if (null == httpClient) {
 			return;
 		}
 		httpClientPool.add(httpClient);
