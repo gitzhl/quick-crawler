@@ -1,4 +1,4 @@
-package com.youzitech.crawler;
+package com.youzitech.crawler.base;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;

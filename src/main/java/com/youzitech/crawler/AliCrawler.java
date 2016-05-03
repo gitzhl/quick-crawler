@@ -21,7 +21,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.youzitech.crawler.base.BaseCrawler;
 import com.youzitech.crawler.common.ResourceStoragePolicy;
+import com.youzitech.crawler.sources.FileResovleAware;
 import com.youzitech.crawler.util.DateFormatter;
 import com.youzitech.crawler.util.PropertiesUtils;
 

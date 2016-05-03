@@ -8,6 +8,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.youzitech.crawler.base.BaseCrawler;
+
 /**
  *
  * @author heliang.zhu
@@ -59,7 +61,6 @@ public class GenericCrawler extends BaseCrawler {
 		}
 		Document document = Jsoup.parse(content);
 		String contentHtml = document.select("#part_desc").html();
-		System.out.println(contentHtml);
 	}
 
 	public static void main(String[] args) throws Exception {
