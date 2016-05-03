@@ -21,31 +21,45 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import com.stara.crawler.common.ResourceStoragePolicy;
 import com.stara.crawler.util.DateFormatter;
 import com.stara.crawler.util.PropertiesUtils;
 
 public class AliCrawler extends BaseCrawler implements FileResovleAware{
 	
+	final String filePath = PropertiesUtils.getProperty("file.source");
+	final String sourceSave = PropertiesUtils.getProperty("file.storage");
+
 	@Override
 	public void start() {
 		try {
-			String content = readFile(PropertiesUtils.getProperty("file.source"));
-			String resourceSave = PropertiesUtils.getProperty("file.storage");
-			if(StringUtils.isNotBlank(content)){
+			String content = readFile(filePath);
+			if (StringUtils.isNotBlank(content)) {
 				Document document = Jsoup.parse(content);
 				Elements lis = document.select("img");
 				Iterator<Element> iterator = lis.iterator();
-				String kindPath = DateFormatter.format(new Date(), "yyyyMMddHHmmss");
-				System.out.println(kindPath);
+				String kindPath = DateFormatter.format(new Date(),
+						"yyyyMMddHHmmss");
 				while (iterator.hasNext()) {
 					Element element = iterator.next();
-					String url = element.attr("src");
-					System.out.println(url+"fdsdfsd");
-					String suffix = StringUtils.lowerCase(StringUtils.substring(url, StringUtils.lastIndexOf(url, Character.valueOf('.'))-1));
-					resourceStorage(url, System.currentTimeMillis()+suffix, resourceSave+"/"+kindPath);
+					String url = (StringUtils.isNotBlank(element.attr("src")) && (StringUtils
+							.startsWith(element.attr("src"), "http") || StringUtils
+							.startsWith(element.attr("src"), "https"))) ? element
+							.attr("src") : element.attr("data-ks-lazyload");
+					if (StringUtils.isNotBlank(url)) {
+						String suffix = StringUtils.lowerCase(StringUtils
+								.substring(
+										url,
+										StringUtils.lastIndexOf(url,
+												Character.valueOf('.')) - 1));
+						resourceStorage(
+								url,
+								ResourceStoragePolicy.TIMESTAMP.geneTag(suffix),
+								sourceSave + "/" + kindPath);
+					}
 				}
 			}
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,9 +95,6 @@ public class AliCrawler extends BaseCrawler implements FileResovleAware{
 	}
 	
 	public static void main(String[] args) {
-		//new AliCrawler().storage("http://p0.ifengimg.com/haina/2016_19/933e73cc0a51f0e_w389_h250.jpg", "123.jpg", "d://savePath");
-		//String content = new AliCrawler().readFile("d://savePath/weizexi.txt");
-		//System.out.println(content);
 		new AliCrawler().start();
 	}
 
