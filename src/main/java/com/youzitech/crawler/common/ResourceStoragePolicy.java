@@ -1,8 +1,8 @@
-package com.stara.crawler.common;
+package com.youzitech.crawler.common;
 
 import java.util.Date;
 
-import com.stara.crawler.util.DateFormatter;
+import com.youzitech.crawler.util.DateFormatter;
 
 /**
  * @see 下载的资源文件命名策略

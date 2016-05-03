@@ -1,4 +1,4 @@
-package com.stara.crawler;
+package com.youzitech.crawler;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,9 +21,9 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.stara.crawler.common.ResourceStoragePolicy;
-import com.stara.crawler.util.DateFormatter;
-import com.stara.crawler.util.PropertiesUtils;
+import com.youzitech.crawler.common.ResourceStoragePolicy;
+import com.youzitech.crawler.util.DateFormatter;
+import com.youzitech.crawler.util.PropertiesUtils;
 
 public class AliCrawler extends BaseCrawler implements FileResovleAware{
 	

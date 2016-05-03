@@ -1,4 +1,4 @@
-package com.stara.crawler.util;
+package com.youzitech.crawler.util;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;

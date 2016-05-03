@@ -1,4 +1,4 @@
-package com.stara.crawler;
+package com.youzitech.crawler;
 
 import java.util.Iterator;
 

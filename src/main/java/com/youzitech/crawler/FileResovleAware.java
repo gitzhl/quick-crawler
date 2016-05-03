@@ -1,4 +1,4 @@
-package com.stara.crawler;
+package com.youzitech.crawler;
 
 public interface FileResovleAware {
 	public String readFile(String path);
