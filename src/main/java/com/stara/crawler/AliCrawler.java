@@ -54,7 +54,7 @@ public class AliCrawler extends BaseCrawler implements FileResovleAware{
 												Character.valueOf('.')) - 1));
 						resourceStorage(
 								url,
-								ResourceStoragePolicy.TIMESTAMP.geneTag(suffix),
+								ResourceStoragePolicy.UUID.geneTag(suffix),
 								sourceSave + "/" + kindPath);
 					}
 				}
