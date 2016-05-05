@@ -138,9 +138,5 @@ public class PropertiesUtils {
 		}
 		init();
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(PropertiesUtils.getProperty("keyspool.max"));
-	}
 
 }
